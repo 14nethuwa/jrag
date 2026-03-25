@@ -1,0 +1,37 @@
+flowchart TD
+    ADMIN[Admin Dashboard]
+
+    subgraph ""
+        direction TB
+        PAGES[Pages]
+        NAV[Navigation]
+        BLOG[Recettes & Blog]
+        MEDIA[Media]
+        TRUST[Trust Content]
+    end
+
+    subgraph ""
+        direction TB
+        PRODUCTS[Produits]
+        ORDERS[Commandes]
+        CUSTOMERS[Clients]
+        LEADS[Leads B2B]
+    end
+
+    subgraph ""
+        direction TB
+        SETTINGS[Settings]
+        USERS[Users / Roles]
+    end
+
+    ADMIN --> PAGES
+    ADMIN --> NAV
+    ADMIN --> PRODUCTS
+    ADMIN --> ORDERS
+    ADMIN --> CUSTOMERS
+    ADMIN --> LEADS
+    ADMIN --> BLOG
+    ADMIN --> MEDIA
+    ADMIN --> TRUST
+    ADMIN --> SETTINGS
+    ADMIN --> USERS

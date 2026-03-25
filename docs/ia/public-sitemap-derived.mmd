@@ -1,0 +1,53 @@
+flowchart TD
+    H[Accueil]
+
+    subgraph ""
+        direction TB
+        ACCOUNT[Mon Compte]
+        CART[Panier]
+        CHECKOUT[Paiement]
+    end
+
+    subgraph ""
+        direction TB
+        LEGAL_1[Mentions legales]
+        LEGAL_2[Confidentialite]
+        LEGAL_3[CGV B2B]
+        LEGAL_4[CGV B2C]
+        LEGAL_5[Plan du site]
+    end
+
+    H --> B2B[Professionnels]
+    H --> B2C[Particuliers]
+    H --> ABOUT[A propos]
+    H --> RES[Ressources]
+    H --> CONTACT[Contact]
+    H --> ACCOUNT
+    H --> CART
+    H --> LEGAL_1
+    H --> LEGAL_2
+    H --> LEGAL_3
+    H --> LEGAL_4
+    H --> LEGAL_5
+
+    B2B --> B2B_PRODUCTS[Produits]
+    B2B --> B2B_KNOWHOW[Savoir-faire]
+    B2B --> B2B_SECTORS[Secteurs / Clients]
+    B2B --> B2B_CERTS[Certifications]
+    B2B --> B2B_CONTACT[Contact Pro]
+
+    B2C --> B2C_SHOP[Boutique]
+    B2C --> B2C_RECIPES[Recettes & Conseils]
+    B2C --> B2C_DELIVERY[Livraison]
+    B2C --> B2C_LOYALTY[Programme Fidelite]
+    CART --> CHECKOUT[Paiement]
+
+    ABOUT --> STORY[Notre histoire]
+    ABOUT --> TERROIR[Terroir Dakhla]
+    ABOUT --> CSR[Engagement RSE]
+    ABOUT --> PRESS[Presse & Medias]
+    ABOUT --> CAREERS[Carrieres]
+
+    RES --> BLOG[Actualites / Blog]
+    RES --> GALLERY[Galerie Photos / Videos]
+    RES --> FAQ[FAQ]

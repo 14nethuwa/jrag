@@ -1,0 +1,91 @@
+{
+  "global": [
+    "Accueil",
+    "Professionnels",
+    "Particuliers",
+    "A propos",
+    "Ressources",
+    "Contact"
+  ],
+  "audiences": {
+    "professionnels": {
+      "local": [
+        "Produits",
+        "Savoir-faire",
+        "Secteurs / Clients",
+        "Certifications",
+        "Contact Pro"
+      ]
+    },
+    "particuliers": {
+      "local": [
+        "Boutique",
+        "Recettes & Conseils",
+        "Livraison",
+        "Programme Fidelite"
+      ]
+    }
+  },
+  "utilities": [
+    "Mon Compte",
+    "Panier"
+  ],
+  "checkout": [
+    "Paiement"
+  ],
+  "admin": {
+    "entry": "/admin",
+    "publicly_linked": false,
+    "sections": [
+      "Dashboard",
+      "Pages",
+      "Navigation",
+      "Produits",
+      "Commandes",
+      "Clients",
+      "Leads B2B",
+      "Recettes & Blog",
+      "Media",
+      "Trust Content",
+      "Settings",
+      "Users / Roles"
+    ]
+  },
+  "footer": {
+    "Professionnels": [
+      "Produits",
+      "Savoir-faire",
+      "Secteurs / Clients",
+      "Certifications",
+      "Contact Pro"
+    ],
+    "Particuliers": [
+      "Boutique",
+      "Recettes & Conseils",
+      "Livraison",
+      "Programme Fidelite"
+    ],
+    "A propos": [
+      "Notre histoire",
+      "Terroir Dakhla",
+      "Engagement RSE",
+      "Presse & Medias",
+      "Carrieres"
+    ],
+    "Ressources": [
+      "Actualites / Blog",
+      "Galerie Photos / Videos",
+      "FAQ"
+    ],
+    "Utilities": [
+      "Mon Compte",
+      "Panier",
+      "Paiement",
+      "Mentions legales",
+      "Confidentialite",
+      "CGV B2B",
+      "CGV B2C",
+      "Plan du site"
+    ]
+  }
+}
