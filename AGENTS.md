@@ -257,6 +257,15 @@ Prefer fewer, larger, more confident images over many small decorative ones.
 - avoid bouncy, gimmicky, or toy-like animation
 - hover states should sharpen or reveal, not jump around
 
+## gstack
+
+Use repo-local gstack skills from `.agents/skills/gstack` when they fit the stage of work.
+
+- Use `gstack-office-hours` to reframe a feature before planning.
+- Use `gstack-plan-ceo-review` and `gstack-plan-design-review` during planning.
+- Use `gstack-review`, `gstack-qa`, `gstack-benchmark`, and `gstack-ship` during implementation and release.
+- Use `gstack-investigate` for debugging and `gstack-cso` for security-sensitive work.
+
 ## Accessibility Reminder
 
 Because `Roboto Condensed` is the reading layer, protect readability with:

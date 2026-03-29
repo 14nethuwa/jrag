@@ -1,0 +1,398 @@
+# Paperclip Configuration for JRAG
+
+## Company Metadata
+
+name: JRAG
+description: "Luxury seafood export house. Editorial-industrial aesthetic with dual B2B/B2C journey."
+version: 1.0.0
+repository: "https://github.com/14nethuwa/jrag"
+
+## Agent Registry
+
+agents:
+  - slug: ceo
+    title: "CEO / Project Orchestrator"
+    reportsTo: null
+    skills:
+      - paperclip
+      - para-memory-files
+      - brainstorming
+      - gstack-office-hours
+      - gstack-plan-ceo-review
+      - gstack-retro
+      - jrag-brand-implementation
+    location: "agents/ceo/AGENTS.md"
+
+  - slug: frontend-dev
+    title: "Frontend Developer"
+    reportsTo: ceo
+    skills:
+      - paperclip
+      - vercel-react-best-practices
+      - requesting-code-review
+      - gstack-review
+      - gstack-qa
+      - gstack-ship
+      - gstack-benchmark
+      - jrag-page-templates
+      - jrag-animation-patterns
+    location: "agents/frontend-dev/AGENTS.md"
+
+  - slug: content-strategist
+    title: "Content & IA Lead"
+    reportsTo: ceo
+    skills:
+      - paperclip
+      - brainstorming
+      - ui-ux-pro-max
+      - gstack-office-hours
+      - gstack-plan-design-review
+      - jrag-page-templates
+      - jrag-brand-implementation
+    location: "agents/content-strategist/AGENTS.md"
+
+  - slug: design-lead
+    title: "Design & Visual System"
+    reportsTo: ceo
+    skills:
+      - paperclip
+      - ui-ux-pro-max
+      - requesting-code-review
+      - gstack-plan-design-review
+      - gstack-design-review
+      - gstack-design-consultation
+      - jrag-brand-implementation
+      - jrag-animation-patterns
+    location: "agents/design-lead/AGENTS.md"
+
+  - slug: db-manager
+    title: "Database Manager"
+    reportsTo: ceo
+    skills:
+      - paperclip
+      - database-schema-design
+      - security-review
+      - express-firebase-api
+      - gstack-investigate
+      - gstack-cso
+    location: "agents/db-manager/AGENTS.md"
+
+## Skills Registry
+
+skills:
+  # Tier 1: Local (from ~/.claude/skills/)
+  - slug: paperclip
+    source: local
+    location: "~/.claude/skills/paperclip"
+    requiredForAllAgents: true
+
+  - slug: para-memory-files
+    source: local
+    location: "~/.claude/skills/para-memory-files"
+    agents: [ceo]
+
+  - slug: brainstorming
+    source: local
+    location: "~/.claude/skills/brainstorming"
+    agents: [ceo, content-strategist]
+
+  - slug: vercel-react-best-practices
+    source: local
+    location: "~/.claude/skills/vercel-react-best-practices"
+    agents: [frontend-dev]
+
+  - slug: requesting-code-review
+    source: local
+    location: "~/.claude/skills/requesting-code-review"
+    agents: [frontend-dev, design-lead]
+
+  - slug: ui-ux-pro-max
+    source: local
+    location: "~/.claude/skills/ui-ux-pro-max"
+    agents: [design-lead, content-strategist]
+
+  - slug: database-schema-design
+    source: local
+    location: "~/.claude/skills/database-schema-design"
+    agents: [db-manager]
+
+  - slug: security-review
+    source: local
+    location: "~/.claude/skills/security-review"
+    agents: [db-manager]
+
+  - slug: express-firebase-api
+    source: local
+    location: "~/.claude/skills/express-firebase-api"
+    agents: [db-manager]
+
+  # Tier 1b: Repo-local gstack skills
+  - slug: gstack-office-hours
+    source: local
+    location: ".agents/skills/gstack-office-hours/SKILL.md"
+    agents: [ceo, content-strategist]
+
+  - slug: gstack-plan-ceo-review
+    source: local
+    location: ".agents/skills/gstack-plan-ceo-review/SKILL.md"
+    agents: [ceo]
+
+  - slug: gstack-plan-design-review
+    source: local
+    location: ".agents/skills/gstack-plan-design-review/SKILL.md"
+    agents: [design-lead, content-strategist]
+
+  - slug: gstack-review
+    source: local
+    location: ".agents/skills/gstack-review/SKILL.md"
+    agents: [frontend-dev]
+
+  - slug: gstack-qa
+    source: local
+    location: ".agents/skills/gstack-qa/SKILL.md"
+    agents: [frontend-dev]
+
+  - slug: gstack-ship
+    source: local
+    location: ".agents/skills/gstack-ship/SKILL.md"
+    agents: [frontend-dev]
+
+  - slug: gstack-benchmark
+    source: local
+    location: ".agents/skills/gstack-benchmark/SKILL.md"
+    agents: [frontend-dev]
+
+  - slug: gstack-design-review
+    source: local
+    location: ".agents/skills/gstack-design-review/SKILL.md"
+    agents: [design-lead]
+
+  - slug: gstack-design-consultation
+    source: local
+    location: ".agents/skills/gstack-design-consultation/SKILL.md"
+    agents: [design-lead]
+
+  - slug: gstack-investigate
+    source: local
+    location: ".agents/skills/gstack-investigate/SKILL.md"
+    agents: [db-manager]
+
+  - slug: gstack-cso
+    source: local
+    location: ".agents/skills/gstack-cso/SKILL.md"
+    agents: [db-manager]
+
+  - slug: gstack-retro
+    source: local
+    location: ".agents/skills/gstack-retro/SKILL.md"
+    agents: [ceo]
+
+  # Tier 3: Custom (local to this repo)
+  - slug: jrag-brand-implementation
+    source: custom
+    location: "skills/jrag-brand-implementation/SKILL.md"
+    description: "Apply noble vs rigorous archetype to all design/feature decisions"
+    agents: [ceo, design-lead, content-strategist]
+
+  - slug: jrag-page-templates
+    source: custom
+    location: "skills/jrag-page-templates/SKILL.md"
+    description: "5 reusable page layouts for consistent implementation"
+    agents: [frontend-dev, design-lead]
+
+  - slug: jrag-animation-patterns
+    source: custom
+    location: "skills/jrag-animation-patterns/SKILL.md"
+    description: "Approved GSAP animation patterns for smooth, purposeful motion"
+    agents: [frontend-dev, design-lead]
+
+## Sprint Process
+
+sprint:
+  phases:
+    - name: "Think"
+      description: "Brainstorm, reframe problem, challenge assumptions"
+      owner: ceo
+      skills: [brainstorming, jrag-brand-implementation]
+
+    - name: "Plan"
+      description: "CEO review → Design review → Eng review"
+      owner: ceo
+      skills: [para-memory-files]
+
+    - name: "Build"
+      description: "Parallel work: Frontend + Content + Design"
+      owner: frontend-dev
+      skills: [jrag-page-templates, jrag-animation-patterns]
+
+    - name: "Review"
+      description: "Auto-fix, flag gaps, get feedback"
+      owner: frontend-dev
+      skills: [requesting-code-review]
+
+    - name: "Test"
+      description: "QA in real browser, fix regressions"
+      owner: frontend-dev
+      skills: []
+
+    - name: "Ship"
+      description: "Stage, commit, push, open PR"
+      owner: frontend-dev
+      skills: []
+
+    - name: "Reflect"
+      description: "Extract learnings, update org memory"
+      owner: ceo
+      skills: [para-memory-files]
+
+## gstack Integration (Optional)
+
+gstack:
+  enabled: true
+  description: "Installed repo-local gstack sprint automation"
+  location: ".agents/skills/gstack"
+  skills:
+    - "gstack-office-hours - Reframe problem"
+    - "gstack-plan-ceo-review - CEO audit"
+    - "gstack-plan-design-review - Design audit"
+    - "gstack-review - Staff engineer review"
+    - "gstack-qa - Real browser testing"
+    - "gstack-ship - Release automation"
+    - "gstack-investigate - Systematic debugging"
+    - "gstack-cso - Security review"
+  setup: |
+    Installed in this repo:
+
+    git clone --single-branch --depth 1 https://github.com/garrytan/gstack.git .agents/skills/gstack
+    cd .agents/skills/gstack && ./setup --host codex
+
+## Workflow Rules
+
+workflow:
+  codingStandards:
+    - "TypeScript strict mode required"
+    - "No 'any' types"
+    - "GSAP animations must clean up (ctx.revert())"
+    - "CSS Modules only (no Tailwind)"
+    - "Three fonts only: Quicksand, Lato, Roboto Condensed"
+    - "Four brand colors only: Ink, Sand, Orange, Blue"
+
+  archetype:
+    - "Every important page must balance 'noble' (emotional) + 'rigorous' (proof)"
+    - "B2B copy must use 'professionnels' language"
+    - "B2C copy must use 'particuliers' language"
+    - "Never mix archetypes within a section"
+
+  audience:
+    - "B2B and B2C are separate journeys, never merged"
+    - "Shared pages accessible from both journeys"
+    - "Navigation must make audience mode clear"
+    - "CTAs must align to audience (Contact Pro vs Shop)"
+
+  accessibility:
+    - "Respect prefers-reduced-motion in all animations"
+    - "WCAG 2.1 AA contrast minimum (4.5:1 for text)"
+    - "Keyboard-accessible forms and links"
+    - "Alt text for all images"
+
+  review:
+    - "CEO reviews all brand/strategy decisions"
+    - "Design lead reviews all visual decisions"
+    - "Frontend dev reviews all code decisions"
+    - "Database manager reviews all data decisions"
+
+## Handoff Rules
+
+handoffs:
+  # CEO → Design Lead
+  - from: ceo
+    to: design-lead
+    trigger: "Brand direction approved"
+    output: "Design mockups, visual specs"
+
+  # Design Lead → Frontend Dev
+  - from: design-lead
+    to: frontend-dev
+    trigger: "Design approved"
+    output: "Design specs, component list, animation direction"
+
+  # Content Strategist → Frontend Dev
+  - from: content-strategist
+    to: frontend-dev
+    trigger: "Copy and IA approved"
+    output: "Content structure, copy, page intent"
+
+  # Frontend Dev → CEO
+  - from: frontend-dev
+    to: ceo
+    trigger: "Page implementation complete"
+    output: "Live page URL, screenshot, notes"
+
+  # DB Manager → Frontend Dev (for data integration)
+  - from: db-manager
+    to: frontend-dev
+    trigger: "Schema designed and approved"
+    output: "Schema docs, query examples, TypeScript interfaces"
+
+## Communication
+
+communication:
+  dailyStandup:
+    time: "09:00 UTC"
+    participants: [ceo, frontend-dev, design-lead, content-strategist, db-manager]
+    duration: "15 min"
+    format: "Slack status: what I shipped, what I'm blocked on"
+
+  weeklyRetro:
+    time: "Friday 16:00 UTC"
+    participants: [ceo]
+    duration: "30 min"
+    format: "Agent learnings, shipping velocity, blockers"
+
+  decisionsLog:
+    location: "docs/superpowers/decisions/"
+    format: "YYYY-MM-DD-decision-title.md"
+    owner: ceo
+
+  shippingLog:
+    location: "docs/superpowers/shipping/"
+    format: "YYYY-MM-DD-shipped-what.md"
+    owner: ceo
+
+## Success Metrics
+
+metrics:
+  pages:
+    - target: "60+ pages implemented"
+    - target: "100% archetype balance (noble + rigorous)"
+    - target: "Zero brand consistency drift"
+
+  code:
+    - target: "TypeScript strict mode: 100%"
+    - target: "Test coverage: 60%+"
+    - target: "Lighthouse score: 70+ (mobile)"
+
+  team:
+    - target: "Shipping 2-3 pages per week"
+    - target: "Zero production bugs from new code"
+    - target: "0-day turnaround on reviews"
+
+## Deployment
+
+deployment:
+  staging:
+    url: "https://staging.jrag.io"
+    branch: "develop"
+    autoPublish: true
+
+  production:
+    url: "https://jrag.io"
+    branch: "main"
+    requiresReview: true
+    reviewers: [ceo]
+
+---
+
+**Last Updated:** 2026-03-29
+**Companify Phase:** 6 (Package Write)
+**Next Step:** Phase 7 (Import & Learn, verify, commit, push)

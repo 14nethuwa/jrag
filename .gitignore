@@ -21,6 +21,9 @@
 # large local media / motion source files
 /public/videos/
 
+# generated gstack binary
+.agents/skills/gstack/bin/gstack-global-discover.exe
+
 # production
 /build
 
