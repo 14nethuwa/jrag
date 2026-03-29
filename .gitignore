@@ -18,6 +18,9 @@
 /out/
 .worktrees/
 
+# large local media / motion source files
+/public/videos/
+
 # production
 /build
 
