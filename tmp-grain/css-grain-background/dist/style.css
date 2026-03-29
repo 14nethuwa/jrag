@@ -1,0 +1,137 @@
+body {
+  background-color: #202020;
+  height: 200vh;
+  position: relative;
+  overflow-x: hidden;
+  font-family: "Monument Extended";
+  margin: 0;
+  padding: 0;
+}
+body .grain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  pointer-events: none;
+  z-index: 300;
+  transform: translateZ(0);
+}
+body .grain:before {
+  content: "";
+  top: -10rem;
+  left: -10rem;
+  width: calc(100% + 20rem);
+  height: calc(100% + 20rem);
+  z-index: 9999;
+  position: fixed;
+  background-image: url(https://upload.wikimedia.org/wikipedia/commons/5/5c/Image_gaussian_noise_example.png);
+  opacity: 0.15;
+  pointer-events: none;
+  -webkit-animation: noise 1s steps(2) infinite;
+  animation: noise 1s steps(2) infinite;
+}
+@-webkit-keyframes noise {
+  to {
+    transform: translate3d(-7rem, 0, 0);
+  }
+}
+@keyframes noise {
+  0% {
+    transform: translate3d(0, 9rem, 0);
+  }
+  10% {
+    transform: translate3d(-1rem, -4rem, 0);
+  }
+  20% {
+    transform: translate3d(-8rem, 2rem, 0);
+  }
+  30% {
+    transform: translate3d(9rem, -9rem, 0);
+  }
+  40% {
+    transform: translate3d(-2rem, 7rem, 0);
+  }
+  50% {
+    transform: translate3d(-9rem, -4rem, 0);
+  }
+  60% {
+    transform: translate3d(2rem, 6rem, 0);
+  }
+  70% {
+    transform: translate3d(7rem, -8rem, 0);
+  }
+  80% {
+    transform: translate3d(-9rem, 1rem, 0);
+  }
+  90% {
+    transform: translate3d(6rem, -5rem, 0);
+  }
+  to {
+    transform: translate3d(-7rem, 0, 0);
+  }
+}
+body h1, body h2 {
+  margin: 100px auto;
+  padding: 0;
+  width: 90vw;
+  color: white;
+  font-weight: 200;
+  text-transform: uppercase;
+  font-size: 10rem;
+  letter-spacing: 0.5rem;
+  line-height: 8rem;
+}
+body .image {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 50vw;
+  background-image: url(https://images.unsplash.com/photo-1598382570113-48c8e44737b7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3648&q=80);
+  background-size: cover;
+  background-position: center;
+  filter: grayscale(100%);
+  opacity: 0.2;
+  z-index: -500;
+}
+body section {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  top: 100vh;
+  height: 105vh;
+  width: 100vw;
+  background-color: #eaeaea;
+}
+body section h2 {
+  color: black;
+}
+
+.copyright {
+  z-index: 5000;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #FC5000;
+  margin: 0;
+  padding: 10px 0px;
+  justify-content: center;
+  text-align: center;
+}
+.copyright p {
+  margin: 0;
+  padding: 0;
+  font-size: 0.7rem;
+  font-family: "Open Sans";
+  color: white;
+}
+.copyright p i {
+  color: white;
+}
+.copyright p a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}

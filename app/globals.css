@@ -4,11 +4,24 @@ body {
   padding: 0;
 }
 
+:root {
+  color-scheme: dark;
+  --jrag-ink: #08131a;
+  --jrag-sand: #f4ede2;
+  --jrag-orange: #d86d2c;
+  --jrag-blue: #6ea3bc;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--jrag-ink);
+}
+
 body {
-  font-family: Arial, sans-serif;
+  font-family: var(--font-roboto-condensed), Arial, sans-serif;
   line-height: 1.5;
-  color: #111;
-  background: #fff;
+  color: var(--jrag-sand);
+  background: var(--jrag-ink);
 }
 
 * {
@@ -18,4 +31,11 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
 }

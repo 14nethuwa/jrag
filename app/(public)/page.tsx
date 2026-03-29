@@ -1,11 +1,19 @@
-import { PagePlaceholder } from '@/components/page-placeholder'
+import { ParallaxIntroSection } from '@/components/parallax-intro-section'
+import { ScrollytellingSection, ScrollYDebug } from '@/components/scrollytelling-section'
 
-export default function ExamplePage() {
+export default function HomePage() {
   return (
-    <PagePlaceholder
-      title="Accueil"
-      context="Shared"
-      description="Placeholder page for future content."
-    />
+    <>
+      {/* Debug: scrollY counter — lives here so transform on child containers doesn't trap it */}
+      <ScrollYDebug />
+
+      {/* TODO: Split entry choice (Professionnels / Particuliers) goes here */}
+
+      {/* Parallax SVG Intro */}
+      <ParallaxIntroSection />
+
+      {/* Scrollytelling — shared across both audience paths */}
+      <ScrollytellingSection />
+    </>
   )
 }
