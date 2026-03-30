@@ -189,7 +189,15 @@ export function ScrollytellingSection() {
       ctx.drawImage(targetImg, offsetX, offsetY, drawWidth, drawHeight)
     }
 
-    frames[0].onload = () => drawFrame(0)
+    // Initialize first frame
+    const firstFrame = loadFrame(0)
+    if (firstFrame) {
+      if (firstFrame.complete) {
+        drawFrame(0)
+      } else {
+        firstFrame.onload = () => drawFrame(0)
+      }
+    }
 
     // ─── GSAP ScrollTrigger Setup ───
     const proxy = { frameIdx: 0 }
@@ -289,9 +297,9 @@ export function ScrollytellingSection() {
       })
     }
 
-          <img id="scrolly-element" src="/images/element.png" alt="Animated illustration of Atlantic coastal dunes used as a scenic background" className={styles.elementImage} />
-        resizeCanvas()
-        drawFrame(Math.floor(proxy.frameIdx))
+    const onResize = () => {
+      resizeCanvas()
+      drawFrame(Math.floor(proxy.frameIdx))
     }
     window.addEventListener('resize', onResize)
 
