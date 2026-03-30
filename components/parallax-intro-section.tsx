@@ -44,19 +44,43 @@ export function ParallaxIntroSection() {
 
         const arrowBtn = document.getElementById('parallax-arrow-btn')
         if (arrowBtn) {
-          const onEnter = () => gsap.to('#parallax-arrow', { y: 10, duration: 0.8, ease: 'back.inOut(3)', overwrite: 'auto' })
-          const onLeave = () => gsap.to('#parallax-arrow', { y: 0, duration: 0.5, ease: 'power3.out', overwrite: 'auto' })
+          const onEnter = () => {
+            gsap.to('#parallax-arrow', { y: 10, duration: 0.8, ease: 'back.inOut(3)', overwrite: 'auto' })
+          }
+          const onLeave = () => {
+            gsap.to('#parallax-arrow', { y: 0, duration: 0.5, ease: 'power3.out', overwrite: 'auto' })
+          }
+          const onFocus = () => {
+            onEnter()
+            gsap.to('#parallax-arrow-focus-ring', { opacity: 1, duration: 0.2 })
+          }
+          const onBlur = () => {
+            onLeave()
+            gsap.to('#parallax-arrow-focus-ring', { opacity: 0, duration: 0.2 })
+          }
           const onClick = () => gsap.to(window, { scrollTo: window.innerHeight * 2.5, duration: 1.5, ease: 'power1.inOut' })
+          const onKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault()
+              onClick()
+            }
+          }
 
           arrowBtn.addEventListener('mouseenter', onEnter)
           arrowBtn.addEventListener('mouseleave', onLeave)
           arrowBtn.addEventListener('click', onClick)
+          arrowBtn.addEventListener('focus', onFocus)
+          arrowBtn.addEventListener('blur', onBlur)
+          arrowBtn.addEventListener('keydown', onKeyDown)
 
           // Stash for cleanup
           ;(container as any)._arrowCleanup = () => {
             arrowBtn.removeEventListener('mouseenter', onEnter)
             arrowBtn.removeEventListener('mouseleave', onLeave)
             arrowBtn.removeEventListener('click', onClick)
+            arrowBtn.removeEventListener('focus', onFocus)
+            arrowBtn.removeEventListener('blur', onBlur)
+            arrowBtn.removeEventListener('keydown', onKeyDown)
           }
         }
 
@@ -296,7 +320,23 @@ export function ParallaxIntroSection() {
               opacity="0"
               x="550"
               y="220"
-              style={{ cursor: 'pointer' }}
+              style={{ cursor: 'pointer', outline: 'none' }}
+              role="button"
+              tabIndex={0}
+              aria-label="Faire défiler vers le bas"
+            />
+            <rect
+              id="parallax-arrow-focus-ring"
+              width="100"
+              height="100"
+              fill="none"
+              stroke="#fff"
+              strokeWidth="2"
+              strokeDasharray="4 4"
+              opacity="0"
+              x="550"
+              y="220"
+              style={{ pointerEvents: 'none' }}
             />
           </svg>
 
