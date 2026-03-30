@@ -1,0 +1,3 @@
+## 2024-03-30 - [Three.js Unnecessary Background Rendering]
+**Learning:** React components containing continuously looping `requestAnimationFrame` blocks for heavy WebGL or Canvas rendering continue to execute at full cost even when offscreen. This is a severe anti-pattern for sites with long scroll depth or scrollytelling.
+**Action:** Always wrap `requestAnimationFrame` render loops inside an `IntersectionObserver` to automatically pause execution and resume only when the canvas enters the viewport.

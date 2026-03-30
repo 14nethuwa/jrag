@@ -285,17 +285,41 @@ export function WebGLWater() {
     mountRef.current.appendChild(renderer.domElement)
 
     let animationId: number
+    let isVisible = true
 
     const render = () => {
+      if (!isVisible) return
+
       // timeUniform.iGlobalTime.value += clock.getDelta() // Using getElapsedTime makes it smoother
       timeUniform.iGlobalTime.value = clock.getElapsedTime()
       renderer.render(scene, camera)
       animationId = requestAnimationFrame(render)
     }
 
-    render()
+    // Performance optimization: Only render when the WebGL canvas is actually in the viewport
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          isVisible = entry.isIntersecting
+          if (isVisible) {
+            // Only restart the loop if it's visible. We use the clock's elapsed time
+            // so jumping back doesn't cause a noticeable skip in the water animation pattern,
+            // though the time value itself will jump.
+            // Using getDelta would be smoother for pausing/resuming, but getElapsedTime is used.
+            cancelAnimationFrame(animationId) // ensure no duplicates
+            render()
+          } else {
+            cancelAnimationFrame(animationId)
+          }
+        })
+      },
+      { rootMargin: '0px', threshold: 0 }
+    )
+
+    observer.observe(renderer.domElement)
 
     return () => {
+      observer.disconnect()
       cancelAnimationFrame(animationId)
       if (mountRef.current && renderer.domElement.parentNode === mountRef.current) {
         mountRef.current.removeChild(renderer.domElement)
