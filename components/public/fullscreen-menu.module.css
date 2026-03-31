@@ -79,6 +79,14 @@
   text-transform: uppercase;
 }
 
+.utilityPill:focus-visible,
+.menuToggle:focus-visible,
+.brand:focus-visible,
+.footerLink:focus-visible {
+  outline: 2px solid var(--menu-accent);
+  outline-offset: 2px;
+}
+
 .menuToggle {
   display: inline-flex;
   align-items: center;
