@@ -1,0 +1,4 @@
+## 2024-05-24 - Missing noopener/noreferrer on target="_blank" links
+**Vulnerability:** External links using target="_blank" without rel="noopener noreferrer" present a security and performance risk, potentially allowing the linked page to access the original page's window object via window.opener.
+**Learning:** Found multiple instances in static HTML components (tmp-grain, underwater-temp) where target="_blank" was used without the corresponding rel attributes. This highlights the need to ensure standard HTML security practices are applied consistently, even in standalone static components and not just in the main Next.js app.
+**Prevention:** Always pair target="_blank" with rel="noopener noreferrer" to prevent reverse tabnabbing and improve performance. Use linting rules to enforce this across the entire codebase.
