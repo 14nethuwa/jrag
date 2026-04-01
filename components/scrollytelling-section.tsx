@@ -105,7 +105,7 @@ export function ScrollytellingSection() {
   const containerRef = useRef<HTMLDivElement>(null)
   const stickyRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const [progress, setProgress] = useState(0)
+  const progressRef = useRef<HTMLSpanElement>(null)
 
   useEffect(() => {
     const container = containerRef.current
@@ -116,7 +116,9 @@ export function ScrollytellingSection() {
     if (!ctx) return
 
     // Ensure each frame starts from a cleared canvas before drawing.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const originalDrawImage = (ctx as any).drawImage.bind(ctx)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(ctx as any).drawImage = (...args: any[]) => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       originalDrawImage(...args)
@@ -150,7 +152,7 @@ export function ScrollytellingSection() {
     const drawFrame = (index: number) => {
       if (index < 0 || index >= FRAME_COUNT) return
 
-      let img = loadFrame(index)
+      const img = loadFrame(index)
       if (!img) return
 
       let targetImg: HTMLImageElement | null = img
@@ -189,7 +191,9 @@ export function ScrollytellingSection() {
       ctx.drawImage(targetImg, offsetX, offsetY, drawWidth, drawHeight)
     }
 
-    frames[0].onload = () => drawFrame(0)
+    if (frames[0]) {
+      frames[0].onload = () => drawFrame(0)
+    }
 
     // ─── GSAP ScrollTrigger Setup ───
     const proxy = { frameIdx: 0 }
@@ -202,14 +206,15 @@ export function ScrollytellingSection() {
         end: 'bottom bottom',
         scrub: 0.5,
         onUpdate: (self) => {
-          setProgress(self.progress)
+          if (progressRef.current) {
+            progressRef.current.textContent = String(Math.round(self.progress * 100))
+          }
           drawFrame(Math.floor(proxy.frameIdx))
         }
       }
     })
 
     const elementReveal = container.querySelector('#scrolly-element-reveal')
-    const introContainer = container.querySelector('#intro-wipe-container')
     const wipeWords = container.querySelectorAll('.wipe-word')
 
     if (elementReveal) {
@@ -289,7 +294,7 @@ export function ScrollytellingSection() {
       })
     }
 
-          <img id="scrolly-element" src="/images/element.png" alt="Animated illustration of Atlantic coastal dunes used as a scenic background" className={styles.elementImage} />
+    const onResize = () => {
         resizeCanvas()
         drawFrame(Math.floor(proxy.frameIdx))
     }
@@ -332,8 +337,8 @@ export function ScrollytellingSection() {
         </h1>
 
         <div className={styles.counter}>
-          <span className={styles.counterNumber}>
-            {Math.round(progress * 100)}
+          <span ref={progressRef} className={styles.counterNumber}>
+            0
           </span>
           <span className={styles.counterLabel}>%</span>
         </div>
