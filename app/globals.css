@@ -10,6 +10,12 @@ body {
   --jrag-sand: #f4ede2;
   --jrag-orange: #d86d2c;
   --jrag-blue: #6ea3bc;
+  --jrag-content-max: 1200px;
+  --jrag-editorial-max: 750px;
+  --jrag-space-section-y: clamp(4rem, 8vw, 6.25rem);
+  --jrag-space-gutter: clamp(1rem, 3.5vw, 2rem);
+  --jrag-card-radius: 0.75rem;
+  --jrag-ease-standard: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 html {

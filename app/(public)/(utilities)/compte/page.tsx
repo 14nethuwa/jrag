@@ -1,11 +1,5 @@
-import { PagePlaceholder } from '@/components/page-placeholder'
+import { AccountDashboard } from '@/components/utilities/account-dashboard'
 
 export default function ExamplePage() {
-  return (
-    <PagePlaceholder
-      title="Mon Compte"
-      context="Utility"
-      description="Placeholder page for future content."
-    />
-  )
+  return <AccountDashboard />
 }

@@ -5,41 +5,8 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import type { CSSProperties, ReactNode } from 'react'
 import { useEffect, useState } from 'react'
+import { consumerLinks, primaryLinks, professionalLinks, utilityLinks, type NavLink } from './navigation-links'
 import styles from './fullscreen-menu.module.css'
-
-type NavLink = {
-  href: string
-  label: string
-}
-
-const primaryLinks: NavLink[] = [
-  { href: '/', label: 'Accueil' },
-  { href: '/professionnels', label: 'Professionnels' },
-  { href: '/particuliers', label: 'Particuliers' },
-  { href: '/a-propos', label: 'A propos' },
-  { href: '/ressources', label: 'Ressources' },
-  { href: '/contact', label: 'Contact' },
-]
-
-const professionalLinks: NavLink[] = [
-  { href: '/professionnels/produits', label: 'Produits' },
-  { href: '/professionnels/savoir-faire', label: 'Savoir-faire' },
-  { href: '/professionnels/secteurs-clients', label: 'Secteurs / Clients' },
-  { href: '/professionnels/certifications', label: 'Certifications' },
-  { href: '/professionnels/contact', label: 'Contact Pro' },
-]
-
-const consumerLinks: NavLink[] = [
-  { href: '/particuliers/boutique', label: 'Boutique' },
-  { href: '/particuliers/recettes-conseils', label: 'Recettes & Conseils' },
-  { href: '/particuliers/livraison', label: 'Livraison' },
-  { href: '/particuliers/fidelite', label: 'Programme Fidelite' },
-]
-
-const utilityLinks: NavLink[] = [
-  { href: '/compte', label: 'Mon Compte' },
-  { href: '/panier', label: 'Panier' },
-]
 
 function isActivePath(pathname: string, href: string) {
   if (href === '/') {
@@ -87,6 +54,7 @@ function AnimatedLink({
 
 type LinkGroupProps = {
   title: string
+  context: string
   links: NavLink[]
   pathname: string
   isOpen: boolean
@@ -94,10 +62,13 @@ type LinkGroupProps = {
   onNavigate: () => void
 }
 
-function LinkGroup({ title, links, pathname, isOpen, startIndex, onNavigate }: LinkGroupProps) {
+function LinkGroup({ title, context, links, pathname, isOpen, startIndex, onNavigate }: LinkGroupProps) {
   return (
     <div className={styles.menuGroup}>
-      <p className={styles.menuGroupTitle}>{title}</p>
+      <div className={styles.menuGroupHeader}>
+        <p className={styles.menuGroupTitle}>{title}</p>
+        <p className={styles.menuGroupContext}>{context}</p>
+      </div>
       <div className={styles.menuGroupLinks}>
         {links.map((link, linkIndex) => (
           <AnimatedLink
@@ -120,6 +91,9 @@ export function FullscreenMenu({ children }: { children: ReactNode }) {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
   const isHome = pathname === '/'
+  const professionalStartIndex = primaryLinks.length
+  const consumerStartIndex = professionalStartIndex + professionalLinks.length
+  const utilityStartIndex = consumerStartIndex + consumerLinks.length
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow
@@ -223,27 +197,30 @@ export function FullscreenMenu({ children }: { children: ReactNode }) {
 
               <div className={styles.secondaryColumn}>
                 <LinkGroup
+                  context="B2B journey"
                   isOpen={isOpen}
                   links={professionalLinks}
                   onNavigate={() => setIsOpen(false)}
                   pathname={pathname}
-                  startIndex={6}
+                  startIndex={professionalStartIndex}
                   title="Professionnels"
                 />
                 <LinkGroup
+                  context="B2C journey"
                   isOpen={isOpen}
                   links={consumerLinks}
                   onNavigate={() => setIsOpen(false)}
                   pathname={pathname}
-                  startIndex={11}
+                  startIndex={consumerStartIndex}
                   title="Particuliers"
                 />
                 <LinkGroup
+                  context="Utilities"
                   isOpen={isOpen}
                   links={utilityLinks}
                   onNavigate={() => setIsOpen(false)}
                   pathname={pathname}
-                  startIndex={15}
+                  startIndex={utilityStartIndex}
                   title="Utilitaires"
                 />
               </div>

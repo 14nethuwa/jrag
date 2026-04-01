@@ -139,7 +139,7 @@ export function ScrollytellingSection() {
         img = new Image()
         // Frames on disk are 1-based: frame-0001.jpg ... frame-1746.jpg
         const frameNumber = index + 1
-        img.src = `/videos/scrollytelling-frames/frame-${String(frameNumber).padStart(4, '0')}.jpg`
+        img.src = `/videos/scrollytelling-frames-1080p-jpg/frame-${String(frameNumber).padStart(4, '0')}.jpg`
         frames[index] = img
       }
 
@@ -189,7 +189,9 @@ export function ScrollytellingSection() {
       ctx.drawImage(targetImg, offsetX, offsetY, drawWidth, drawHeight)
     }
 
-    frames[0].onload = () => drawFrame(0)
+    const firstFrame = loadFrame(0)
+    if (!firstFrame) return
+    firstFrame.onload = () => drawFrame(0)
 
     // ─── GSAP ScrollTrigger Setup ───
     const proxy = { frameIdx: 0 }
@@ -215,8 +217,8 @@ export function ScrollytellingSection() {
     if (elementReveal) {
       // 1) The swipe-off image appears fully
       tl.fromTo(elementReveal,
-        { width: 0, autoAlpha: 1 },
-        { width: '100%', autoAlpha: 1, duration: 0.15, ease: 'none' },
+        { scaleX: 0, autoAlpha: 1 },
+        { scaleX: 1, autoAlpha: 1, duration: 0.15, ease: 'none' },
         0
       )
 
@@ -235,9 +237,9 @@ export function ScrollytellingSection() {
         { frameIdx: 1, duration: 0.01, ease: 'none' },
         0.15
       )
-
+       
       // 3) The wipe off image disappears INSTANTLY after
-      tl.set(elementReveal, { autoAlpha: 0 }, 0.16)
+      tl.set(elementReveal, { scaleX: 0, autoAlpha: 0 }, 0.16)
       // Intro Text remains completely untouched here to linger beautifully down the page
 
       // 4) Then the scrollytelling flow resumes as normal and goes to frame 3 onward
@@ -289,9 +291,9 @@ export function ScrollytellingSection() {
       })
     }
 
-          <img id="scrolly-element" src="/images/element.png" alt="Animated illustration of Atlantic coastal dunes used as a scenic background" className={styles.elementImage} />
-        resizeCanvas()
-        drawFrame(Math.floor(proxy.frameIdx))
+    const onResize = () => {
+      resizeCanvas()
+      drawFrame(Math.floor(proxy.frameIdx))
     }
     window.addEventListener('resize', onResize)
 
@@ -312,7 +314,7 @@ export function ScrollytellingSection() {
         {/* Animated Element Image (Behind Grain) */}
         <div id="scrolly-element-reveal" className={styles.elementReveal}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img id="scrolly-element" src="/images/element.png" alt="Animated scenic element" className={styles.elementImage} />
+          <img id="scrolly-element" src="/images/element.avif" alt="Animated scenic element" className={styles.elementImage} />
         </div>
 
         <GrainOverlay />

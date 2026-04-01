@@ -1,0 +1,86 @@
+.page {
+  display: grid;
+  gap: 1rem;
+}
+
+.hero {
+  border: 1px solid rgb(255 255 255 / 14%);
+  border-radius: 1rem;
+  padding: 1.25rem;
+  background:
+    radial-gradient(circle at 8% 10%, rgb(110 163 188 / 30%), transparent 42%),
+    radial-gradient(circle at 92% 12%, rgb(216 109 44 / 26%), transparent 45%),
+    linear-gradient(180deg, #0b1e28 0%, #132c39 100%);
+}
+
+.eyebrow {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-roboto-condensed), sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(110 163 188);
+  font-size: 0.78rem;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-quicksand), sans-serif;
+  font-size: clamp(1.7rem, 3.6vw, 2.5rem);
+}
+
+.description {
+  margin: 0.55rem 0 0;
+  max-width: 72ch;
+  color: rgb(244 237 226 / 82%);
+  font-family: var(--font-lato), sans-serif;
+}
+
+.moduleGrid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.moduleCard {
+  border-radius: 0.9rem;
+  border: 1px solid rgb(255 255 255 / 14%);
+  background: rgb(8 20 27 / 90%);
+}
+
+.moduleLink {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.95rem;
+}
+
+.moduleTitle {
+  margin: 0;
+  font-family: var(--font-quicksand), sans-serif;
+  font-size: 1.1rem;
+}
+
+.moduleText {
+  margin: 0;
+  color: rgb(244 237 226 / 78%);
+  font-family: var(--font-roboto-condensed), sans-serif;
+}
+
+.hook {
+  margin: 0;
+  border: 1px solid rgb(216 109 44 / 74%);
+  border-radius: 0.8rem;
+  color: rgb(255 217 187);
+  background: rgb(68 35 15 / 48%);
+  font-family: var(--font-roboto-condensed), sans-serif;
+  font-size: 0.94rem;
+  padding: 0.8rem;
+}
+
+@media (max-width: 900px) {
+  .moduleGrid {
+    grid-template-columns: 1fr;
+  }
+}

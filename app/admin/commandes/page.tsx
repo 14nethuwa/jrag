@@ -1,11 +1,6 @@
-import { PagePlaceholder } from '@/components/page-placeholder'
+import { coreModules } from '@/components/admin/core-module-data'
+import { ModulePageShell } from '@/components/admin/module-page-shell'
 
 export default function ExamplePage() {
-  return (
-    <PagePlaceholder
-      title="Commandes"
-      context="Admin"
-      description="Placeholder page for future content."
-    />
-  )
+  return <ModulePageShell {...coreModules.commandes} />
 }

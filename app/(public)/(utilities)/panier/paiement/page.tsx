@@ -1,11 +1,5 @@
-import { PagePlaceholder } from '@/components/page-placeholder'
+import { CheckoutDashboard } from '@/components/utilities/checkout-dashboard'
 
 export default function ExamplePage() {
-  return (
-    <PagePlaceholder
-      title="Paiement"
-      context="Utility"
-      description="Placeholder page for future content."
-    />
-  )
+  return <CheckoutDashboard />
 }

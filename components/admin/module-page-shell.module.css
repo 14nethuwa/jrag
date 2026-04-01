@@ -1,0 +1,128 @@
+.page {
+  display: grid;
+  gap: 1rem;
+}
+
+.hero {
+  border: 1px solid rgb(255 255 255 / 14%);
+  border-radius: 1rem;
+  background:
+    radial-gradient(circle at 5% 12%, rgb(110 163 188 / 26%), transparent 40%),
+    radial-gradient(circle at 88% 10%, rgb(216 109 44 / 24%), transparent 44%),
+    rgb(10 25 34 / 92%);
+  padding: 1.2rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.76rem;
+  color: rgb(110 163 188);
+  font-family: var(--font-roboto-condensed), sans-serif;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-quicksand), sans-serif;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+}
+
+.description {
+  margin: 0.45rem 0 0;
+  color: rgb(244 237 226 / 80%);
+  max-width: 70ch;
+  font-family: var(--font-lato), sans-serif;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.metric {
+  border: 1px solid rgb(255 255 255 / 14%);
+  border-radius: 0.8rem;
+  padding: 0.8rem;
+  background: rgb(9 22 30 / 86%);
+}
+
+.metricValue {
+  margin: 0;
+  font-family: var(--font-quicksand), sans-serif;
+  font-size: 1.34rem;
+}
+
+.metricLabel {
+  margin: 0.15rem 0 0;
+  color: rgb(244 237 226 / 88%);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.8rem;
+  font-family: var(--font-roboto-condensed), sans-serif;
+}
+
+.tableWrap {
+  border: 1px solid rgb(255 255 255 / 14%);
+  border-radius: 1rem;
+  overflow: hidden;
+  background: rgb(8 18 25 / 90%);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 0.75rem;
+  border-bottom: 1px solid rgb(255 255 255 / 8%);
+  font-family: var(--font-roboto-condensed), sans-serif;
+}
+
+.table th {
+  color: rgb(244 237 226 / 86%);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.table td {
+  color: rgb(244 237 226 / 94%);
+  font-size: 0.92rem;
+}
+
+.status {
+  border-radius: 999px;
+  padding: 0.16rem 0.58rem;
+  border: 1px solid rgb(146 199 225 / 80%);
+  color: rgb(221 240 252);
+  background: rgb(14 43 59 / 70%);
+  font-family: var(--font-roboto-condensed), sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.hook {
+  margin: 0;
+  border: 1px solid rgb(216 109 44 / 72%);
+  color: rgb(255 217 187);
+  background: rgb(68 35 15 / 48%);
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  font-family: var(--font-roboto-condensed), sans-serif;
+}
+
+@media (max-width: 960px) {
+  .metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .tableWrap {
+    overflow-x: auto;
+  }
+}

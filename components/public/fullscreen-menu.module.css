@@ -300,6 +300,22 @@
   gap: 0.85rem;
 }
 
+.menuGroupHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.menuGroupContext {
+  margin: 0;
+  color: rgba(244, 237, 226, 0.48);
+  font-family: var(--font-roboto-condensed), sans-serif;
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
 .menuGroupLinks {
   gap: 0.45rem;
 }

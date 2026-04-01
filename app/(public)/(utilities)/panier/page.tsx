@@ -1,11 +1,5 @@
-import { PagePlaceholder } from '@/components/page-placeholder'
+import { CartDashboard } from '@/components/utilities/cart-dashboard'
 
 export default function ExamplePage() {
-  return (
-    <PagePlaceholder
-      title="Panier"
-      context="Utility"
-      description="Placeholder page for future content."
-    />
-  )
+  return <CartDashboard />
 }
