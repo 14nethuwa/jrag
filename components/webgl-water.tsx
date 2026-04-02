@@ -284,19 +284,39 @@ export function WebGLWater() {
     
     mountRef.current.appendChild(renderer.domElement)
 
-    let animationId: number
+    let animationId: number | null = null
+    let isVisible = true
 
     const render = () => {
+      if (!isVisible) return
       // timeUniform.iGlobalTime.value += clock.getDelta() // Using getElapsedTime makes it smoother
       timeUniform.iGlobalTime.value = clock.getElapsedTime()
       renderer.render(scene, camera)
       animationId = requestAnimationFrame(render)
     }
 
-    render()
+    // ⚡ Bolt Optimization: Only render the WebGL canvas when it is visible in the viewport.
+    // This prevents expensive raymarching from running when the user has scrolled past it.
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        isVisible = entry.isIntersecting
+        if (isVisible) {
+          // Sync clock so it doesn't jump forward if we use delta, though elapsedTime continues
+          render()
+        } else if (animationId !== null) {
+          cancelAnimationFrame(animationId)
+          animationId = null
+        }
+      })
+    })
+
+    observer.observe(renderer.domElement)
 
     return () => {
-      cancelAnimationFrame(animationId)
+      observer.disconnect()
+      if (animationId !== null) {
+        cancelAnimationFrame(animationId)
+      }
       if (mountRef.current && renderer.domElement.parentNode === mountRef.current) {
         mountRef.current.removeChild(renderer.domElement)
       }
