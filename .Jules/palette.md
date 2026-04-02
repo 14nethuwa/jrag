@@ -1,0 +1,3 @@
+## 2026-04-02 - Redundant Audio Context on Active Navigation
+**Learning:** Adding visual badges like "Actif" to active navigation items causes screen readers to redundantly announce the state if `aria-current="page"` is also used. Users hear "Actif, Dashboard, current page, link" which is confusing and repetitive.
+**Action:** When adding visual indicators for active states alongside standard ARIA attributes (`aria-current="page"`), always apply `aria-hidden="true"` to the visual text element to keep the semantic DOM clean and the audio experience concise.
