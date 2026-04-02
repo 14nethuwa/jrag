@@ -1,0 +1,4 @@
+## 2025-04-01 - [Reverse Tabnabbing]
+**Vulnerability:** Found multiple `a` tags with `target="_blank"` missing the `rel="noopener noreferrer"` attribute in static component directories (`tmp-grain/`, `underwater-temp/`). This allows the newly opened page to access the `window.opener` object, potentially navigating the original page to a malicious URL.
+**Learning:** Even simple, standalone, or temporary UI components need security attributes correctly set if they contain external links to prevent reverse tabnabbing. This is a common pattern when copying simple HTML templates. Both `src/` and `dist/` directories for standalone components must be updated.
+**Prevention:** Always ensure any `<a target="_blank">` element includes `rel="noopener noreferrer"`. Incorporate this check into general linting rules, and review all external links during component development.
