@@ -64,7 +64,7 @@ export function ParallaxIntroSection() {
         
         function createWave(pathId: string, options: any) {
           options = options || {}
-          let wave = {
+          const wave = {
             amplitude: options.amplitude || 200,
             duration: options.duration || 2,
             frequency: options.frequency || 4,
@@ -87,12 +87,12 @@ export function ParallaxIntroSection() {
 
           wave.init = () => {
             wave.kill()
-            let segments = wave.segments
-            let interval = wave.width / segments
+            const segments = wave.segments
+            const interval = wave.width / segments
             for (let i = 0; i <= segments; i++) {
-              let norm = i / segments
-              let point = { x: wave.x + i * interval, y: 1 }
-              let tween = gsap
+              const norm = i / segments
+              const point = { x: wave.x + i * interval, y: 1 }
+              const tween = gsap
                 .to(point, { duration: wave.duration, y: -1, repeat: -1, yoyo: true, ease: 'sine.inOut' })
                 .progress(norm * wave.frequency)
               wave.tweens.push(tween)
@@ -103,14 +103,14 @@ export function ParallaxIntroSection() {
           wave.draw = () => {
             const pathElement = document.getElementById(pathId)
             if (!pathElement) return
-            let points = wave.points
-            let len = points.length
-            let startY = wave.waveHeight
-            let height = wave.amplitude / 2
+            const points = wave.points
+            const len = points.length
+            const startY = wave.waveHeight
+            const height = wave.amplitude / 2
 
             let d = `M ${points[0].x} ${startY + points[0].y * height}`
             for (let i = 1; i < len; i++) {
-              let point = points[i]
+              const point = points[i]
               d += ` L ${point.x} ${startY + point.y * height}`
             }
             // Close shape dynamically deep down the SVG to guarantee total masking coverage below the wave
@@ -144,10 +144,10 @@ export function ParallaxIntroSection() {
         }
 
         // Tightened starting heights so the 3 layers act as one cohesive, dense wave instead of separating wildly.
-        let wave1 = createWavePair('wave1s', 'wave1r', { amplitude: 10, duration: 4, frequency: 2.5, width: vw, height: maskDepth, segments: 100, waveHeight: 200 })
-        let wave2 = createWavePair('wave2s', 'wave2r', { amplitude: 15, duration: 4, frequency: 1.5, width: vw, height: maskDepth, segments: 100, waveHeight: 215 })
-        let wave3 = createWavePair('wave3s', 'wave3r', { amplitude: 20, duration: 4, frequency: 0.5, width: vw, height: maskDepth, segments: 100, waveHeight: 230 })
-        let waves = [wave1, wave2, wave3]
+        const wave1 = createWavePair('wave1s', 'wave1r', { amplitude: 10, duration: 4, frequency: 2.5, width: vw, height: maskDepth, segments: 100, waveHeight: 200 })
+        const wave2 = createWavePair('wave2s', 'wave2r', { amplitude: 15, duration: 4, frequency: 1.5, width: vw, height: maskDepth, segments: 100, waveHeight: 215 })
+        const wave3 = createWavePair('wave3s', 'wave3r', { amplitude: 20, duration: 4, frequency: 0.5, width: vw, height: maskDepth, segments: 100, waveHeight: 230 })
+        const waves = [wave1, wave2, wave3]
 
         // Keep the vertical "bobbing/breathing" extremely subtle (just 20px) instead of 200px!
         gsap.to(waves, { duration: 6, waveHeight: '+=20', ease: 'sine.inOut', repeat: -1, yoyo: true })
@@ -155,10 +155,29 @@ export function ParallaxIntroSection() {
         gsap.to(wave2, { duration: 3, amplitude: 25, ease: 'sine.inOut', repeat: -1, yoyo: true })
         gsap.to(wave3, { duration: 4, amplitude: 40, ease: 'sine.inOut', repeat: -1, yoyo: true })
 
-        const updateWavePaths = () => { waves.forEach(w => w.draw()) }
+        // ⚡ Bolt Optimization: Prevent continuous DOM mutation when off-screen
+        // The SVG wave redraws path 'd' attributes on every GSAP tick.
+        // Pausing this when out of view saves CPU cycles significantly.
+        let isVisible = true
+        const observer = new IntersectionObserver(
+          ([entry]) => {
+            isVisible = entry.isIntersecting
+          },
+          { threshold: 0 }
+        )
+        if (containerRef.current) {
+          observer.observe(containerRef.current)
+        }
+
+        const updateWavePaths = () => {
+          if (isVisible) {
+            waves.forEach(w => w.draw())
+          }
+        }
         gsap.ticker.add(updateWavePaths)
 
         return () => {
+          observer.disconnect()
           gsap.ticker.remove(updateWavePaths)
           waves.forEach(w => w.kill())
           if ((container as any)._arrowCleanup) (container as any)._arrowCleanup()
