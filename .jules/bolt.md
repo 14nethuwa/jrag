@@ -1,0 +1,3 @@
+## 2025-04-03 - [Pausing off-screen continuous animations]
+**Learning:** Continuous animations like WebGL rendering loops via `requestAnimationFrame` and SVG DOM mutations (like GSAP tick updating path `d` attributes) will continuously consume CPU and GPU cycles even when the user has scrolled entirely past the elements containing them.
+**Action:** Always implement `IntersectionObserver` wrappers around continuous rendering loops or high-frequency DOM mutations to pause them (`isVisible = false`) when `entry.isIntersecting` is false, especially in scrollytelling pages where sections can take up a lot of vertical space and then go completely off-screen.

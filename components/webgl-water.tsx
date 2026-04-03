@@ -285,20 +285,39 @@ export function WebGLWater() {
     mountRef.current.appendChild(renderer.domElement)
 
     let animationId: number
+    let isVisible = true
 
+    // ⚡ Bolt Optimization: Prevent continuous WebGL rendering when off-screen
+    // requestAnimationFrame fires continuously, eating GPU/CPU even when out of view.
+    // By skipping the render step when `isVisible` is false, we drastically reduce idle load.
     const render = () => {
       // timeUniform.iGlobalTime.value += clock.getDelta() // Using getElapsedTime makes it smoother
-      timeUniform.iGlobalTime.value = clock.getElapsedTime()
-      renderer.render(scene, camera)
+      if (isVisible) {
+        timeUniform.iGlobalTime.value = clock.getElapsedTime()
+        renderer.render(scene, camera)
+      }
       animationId = requestAnimationFrame(render)
     }
 
     render()
 
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting
+      },
+      { threshold: 0 }
+    )
+    const currentMount = mountRef.current
+
+    if (currentMount) {
+      observer.observe(currentMount)
+    }
+
     return () => {
+      observer.disconnect()
       cancelAnimationFrame(animationId)
-      if (mountRef.current && renderer.domElement.parentNode === mountRef.current) {
-        mountRef.current.removeChild(renderer.domElement)
+      if (currentMount && renderer.domElement.parentNode === currentMount) {
+        currentMount.removeChild(renderer.domElement)
       }
       renderer.dispose()
       geometry.dispose()

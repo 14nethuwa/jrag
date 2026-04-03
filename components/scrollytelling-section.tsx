@@ -150,7 +150,7 @@ export function ScrollytellingSection() {
     const drawFrame = (index: number) => {
       if (index < 0 || index >= FRAME_COUNT) return
 
-      let img = loadFrame(index)
+      const img = loadFrame(index)
       if (!img) return
 
       let targetImg: HTMLImageElement | null = img
