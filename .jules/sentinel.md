@@ -1,0 +1,4 @@
+## 2025-04-04 - [Missing noopener noreferrer on target="_blank" Links]
+**Vulnerability:** Found multiple anchor tags (`<a>`) using `target="_blank"` without the `rel="noopener noreferrer"` attribute. This exposes the application to reverse tabnabbing, a security vulnerability where the newly opened page can maliciously manipulate the original page's location object (`window.opener.location`), potentially redirecting users to phishing sites.
+**Learning:** Even in static HTML templates (like those found in `tmp-grain` and `underwater-temp`), it is crucial to follow secure linking practices. The absence of these attributes is a common oversight when integrating third-party templates or components.
+**Prevention:** Always add `rel="noopener noreferrer"` to any anchor tag that uses `target="_blank"`. Implement automated linting rules (like `react/jsx-no-target-blank` if using React, or HTML linters) to catch this pattern during development.
