@@ -1,0 +1,3 @@
+## 2024-04-06 - Accessible Active Navigation State
+**Learning:** When using `aria-current="page"` to indicate the active state of navigation links alongside standard visual text, creating an additional `.srOnly` screen-reader-only element and hiding the visual text with `aria-hidden="true"` is entirely redundant and anti-pattern. The `aria-current` attribute itself already signals the active state to screen readers naturally alongside the visible text.
+**Action:** Simply apply `aria-current="page"` to the `<Link>` or `<a>` element, and rely on the existing visible text content. Avoid over-engineering accessibility with redundant hidden spans when native ARIA attributes accomplish the goal natively.

@@ -43,6 +43,7 @@ function AnimatedLink({
       className={`${styles.menuLink} ${tone === 'secondary' ? styles.menuLinkSecondary : ''}`}
       data-open={isOpen ? 'true' : 'false'}
       data-active={isActive ? 'true' : 'false'}
+      aria-current={isActive ? 'page' : undefined}
       onClick={onNavigate}
       style={style}
       tabIndex={isOpen ? 0 : -1}
