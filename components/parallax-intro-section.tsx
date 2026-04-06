@@ -108,16 +108,20 @@ export function ParallaxIntroSection() {
             let startY = wave.waveHeight
             let height = wave.amplitude / 2
 
-            let d = `M ${points[0].x} ${startY + points[0].y * height}`
+            const pathCommands = [`M ${points[0].x} ${startY + points[0].y * height}`]
             for (let i = 1; i < len; i++) {
               let point = points[i]
-              d += ` L ${point.x} ${startY + point.y * height}`
+              pathCommands.push(`L ${point.x} ${startY + point.y * height}`)
             }
             // Close shape dynamically deep down the SVG to guarantee total masking coverage below the wave
-            d += ` L ${wave.x + wave.width} ${wave.y + wave.height}`
-            d += ` L ${wave.x} ${wave.y + wave.height}`
-            d += ' Z'
-            pathElement.setAttribute('d', d)
+            pathCommands.push(
+              `L ${wave.x + wave.width} ${wave.y + wave.height}`,
+              `L ${wave.x} ${wave.y + wave.height}`,
+              'Z'
+            )
+
+            // Optimization: join string parts for setting attribute rather than using string concatenation in high frequency ticker loop.
+            pathElement.setAttribute('d', pathCommands.join(' '))
           }
 
           wave.init()
