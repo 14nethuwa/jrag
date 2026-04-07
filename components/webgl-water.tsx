@@ -234,7 +234,8 @@ export function WebGLWater() {
   const mountRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (!mountRef.current) return
+    const mountNode = mountRef.current
+    if (!mountNode) return
 
     const fov = 30
     const clock = new THREE.Clock()
@@ -282,23 +283,39 @@ export function WebGLWater() {
     renderer.setSize(1200, 800)
     renderer.setPixelRatio(window.devicePixelRatio || 1)
     
-    mountRef.current.appendChild(renderer.domElement)
+    mountNode.appendChild(renderer.domElement)
 
     let animationId: number
+    let isVisible = false
 
     const render = () => {
-      // timeUniform.iGlobalTime.value += clock.getDelta() // Using getElapsedTime makes it smoother
+      if (!isVisible) return
+
       timeUniform.iGlobalTime.value = clock.getElapsedTime()
       renderer.render(scene, camera)
       animationId = requestAnimationFrame(render)
     }
 
-    render()
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        isVisible = entry.isIntersecting
+        if (isVisible) {
+          // Sync clock so we don't jump time dramatically when re-entering
+          clock.getElapsedTime()
+          render()
+        } else {
+          cancelAnimationFrame(animationId)
+        }
+      })
+    }, { threshold: 0 })
+
+    observer.observe(mountNode)
 
     return () => {
+      observer.disconnect()
       cancelAnimationFrame(animationId)
-      if (mountRef.current && renderer.domElement.parentNode === mountRef.current) {
-        mountRef.current.removeChild(renderer.domElement)
+      if (renderer.domElement.parentNode === mountNode) {
+        mountNode.removeChild(renderer.domElement)
       }
       renderer.dispose()
       geometry.dispose()
