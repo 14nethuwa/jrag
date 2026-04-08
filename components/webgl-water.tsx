@@ -284,7 +284,7 @@ export function WebGLWater() {
     
     mountRef.current.appendChild(renderer.domElement)
 
-    let animationId: number
+    let animationId: number | null = null
 
     const render = () => {
       // timeUniform.iGlobalTime.value += clock.getDelta() // Using getElapsedTime makes it smoother
@@ -293,13 +293,39 @@ export function WebGLWater() {
       animationId = requestAnimationFrame(render)
     }
 
-    render()
+    // ⚡ Bolt Performance Optimization:
+    // We use an IntersectionObserver to fully pause the requestAnimationFrame loop
+    // whenever the WebGL canvas is outside the viewport. This significantly
+    // reduces CPU and GPU usage by avoiding unnecessary rendering and waking up
+    // the main thread for off-screen content.
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          if (animationId === null) {
+            render()
+          }
+        } else {
+          if (animationId !== null) {
+            cancelAnimationFrame(animationId)
+            animationId = null
+          }
+        }
+      })
+    })
+
+    const currentMount = mountRef.current
+    observer.observe(currentMount)
 
     return () => {
-      cancelAnimationFrame(animationId)
-      if (mountRef.current && renderer.domElement.parentNode === mountRef.current) {
-        mountRef.current.removeChild(renderer.domElement)
+      observer.disconnect()
+      if (animationId !== null) {
+        cancelAnimationFrame(animationId)
       }
+
+      if (currentMount && renderer.domElement.parentNode === currentMount) {
+        currentMount.removeChild(renderer.domElement)
+      }
+
       renderer.dispose()
       geometry.dispose()
       material.dispose()

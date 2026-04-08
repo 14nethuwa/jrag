@@ -1,0 +1,3 @@
+## 2024-04-08 - React WebGL requestAnimationFrame Leak
+**Learning:** In React components containing WebGL (like Three.js), wrapping the render loop with an `IntersectionObserver` is not enough if you only conditionally skip the `renderer.render()` call. The `requestAnimationFrame` loop itself will continue to fire, continuously waking up the main thread even when off-screen.
+**Action:** When pausing WebGL loops via `IntersectionObserver`, explicitly capture the animation ID and invoke `cancelAnimationFrame(animationId)` to completely kill the loop when `isIntersecting` is false, and restart it with `requestAnimationFrame` when it comes back into view.
