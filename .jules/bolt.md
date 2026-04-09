@@ -1,0 +1,3 @@
+## 2026-04-09 - [WebGL Animation Loop Suspension]
+**Learning:** React components containing continuous rendering loops (like WebGL with `requestAnimationFrame`) do not automatically pause when they scroll off-screen, leading to wasted CPU/GPU cycles in the background. React doesn't know about visibility natively.
+**Action:** Always wrap `requestAnimationFrame` loops in React with an `IntersectionObserver`. Only call `requestAnimationFrame` when `entry.isIntersecting` is true, and ensure to cancel it when the component is not visible to prevent continuous background rendering.
