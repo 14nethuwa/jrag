@@ -69,7 +69,7 @@ function renderRouteList(pathname: string, routes: AdminRoute[]): ReactNode {
         const className = active ? `${styles.link} ${styles.activeLink}` : styles.link
         return (
           <li key={route.href}>
-            <Link href={route.href} className={className}>
+            <Link href={route.href} className={className} aria-current={active ? 'page' : undefined}>
               {route.label}
               {active ? <span className={styles.badge}>Actif</span> : null}
             </Link>
