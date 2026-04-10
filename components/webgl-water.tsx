@@ -285,20 +285,41 @@ export function WebGLWater() {
     mountRef.current.appendChild(renderer.domElement)
 
     let animationId: number
+    let isVisible = true
 
     const render = () => {
-      // timeUniform.iGlobalTime.value += clock.getDelta() // Using getElapsedTime makes it smoother
-      timeUniform.iGlobalTime.value = clock.getElapsedTime()
-      renderer.render(scene, camera)
-      animationId = requestAnimationFrame(render)
+      if (isVisible) {
+        timeUniform.iGlobalTime.value = clock.getElapsedTime()
+        renderer.render(scene, camera)
+        animationId = requestAnimationFrame(render)
+      }
     }
 
-    render()
+    // ⚡ Bolt Performance Optimization:
+    // What: Added an IntersectionObserver to pause the WebGL render loop when off-screen.
+    // Why: requestAnimationFrame runs continuously, consuming CPU/GPU even when the component isn't visible.
+    // Expected Impact: Reduces idle CPU usage and GPU wakeups when the canvas is scrolled out of view.
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          isVisible = entry.isIntersecting
+          if (isVisible) {
+            render()
+          } else {
+            cancelAnimationFrame(animationId)
+          }
+        })
+      }
+    )
+    const nodeToObserve = mountRef.current
+    if (nodeToObserve) observer.observe(nodeToObserve)
+
 
     return () => {
       cancelAnimationFrame(animationId)
-      if (mountRef.current && renderer.domElement.parentNode === mountRef.current) {
-        mountRef.current.removeChild(renderer.domElement)
+      observer.disconnect()
+      if (nodeToObserve && renderer.domElement.parentNode === nodeToObserve) {
+        nodeToObserve.removeChild(renderer.domElement)
       }
       renderer.dispose()
       geometry.dispose()
