@@ -285,20 +285,40 @@ export function WebGLWater() {
     mountRef.current.appendChild(renderer.domElement)
 
     let animationId: number
+    let isRendering = false
 
     const render = () => {
+      if (!isRendering) return
       // timeUniform.iGlobalTime.value += clock.getDelta() // Using getElapsedTime makes it smoother
       timeUniform.iGlobalTime.value = clock.getElapsedTime()
       renderer.render(scene, camera)
       animationId = requestAnimationFrame(render)
     }
 
-    render()
+    // Wrap the render loop in an IntersectionObserver to pause when off-screen
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          if (!isRendering) {
+            isRendering = true
+            render()
+          }
+        } else {
+          isRendering = false
+          cancelAnimationFrame(animationId)
+        }
+      })
+    })
+
+    const mountNode = mountRef.current
+    observer.observe(mountNode)
 
     return () => {
+      observer.disconnect()
+      isRendering = false
       cancelAnimationFrame(animationId)
-      if (mountRef.current && renderer.domElement.parentNode === mountRef.current) {
-        mountRef.current.removeChild(renderer.domElement)
+      if (mountNode && renderer.domElement.parentNode === mountNode) {
+        mountNode.removeChild(renderer.domElement)
       }
       renderer.dispose()
       geometry.dispose()
