@@ -46,6 +46,7 @@ function AnimatedLink({
       onClick={onNavigate}
       style={style}
       tabIndex={isOpen ? 0 : -1}
+      aria-current={isActive ? 'page' : undefined}
     >
       <span className={styles.menuLinkLine}>{label}</span>
     </Link>
