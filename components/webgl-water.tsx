@@ -286,16 +286,36 @@ export function WebGLWater() {
 
     let animationId: number
 
+    // ⚡ Bolt: Performance Optimization
+    // What: Added IntersectionObserver to pause the WebGL rendering loop when the component is off-screen.
+    // Why: `requestAnimationFrame` continuously wakes up the main thread even when the user cannot see the canvas, wasting CPU/GPU resources and battery life.
+    // Expected Impact: Eliminates unnecessary background rendering, freeing up main thread resources and reducing idle power consumption.
+    let isVisible = false
+    const observer = new IntersectionObserver((entries) => {
+      isVisible = entries[0].isIntersecting
+      if (isVisible) {
+        // Start the render loop if it's not already running
+        // Using getElapsedTime makes it smoother
+        render()
+      } else {
+        // Stop the render loop when off-screen
+        cancelAnimationFrame(animationId)
+      }
+    })
+
+    if (mountRef.current) {
+      observer.observe(mountRef.current)
+    }
+
     const render = () => {
-      // timeUniform.iGlobalTime.value += clock.getDelta() // Using getElapsedTime makes it smoother
+      if (!isVisible) return
       timeUniform.iGlobalTime.value = clock.getElapsedTime()
       renderer.render(scene, camera)
       animationId = requestAnimationFrame(render)
     }
 
-    render()
-
     return () => {
+      observer.disconnect()
       cancelAnimationFrame(animationId)
       if (mountRef.current && renderer.domElement.parentNode === mountRef.current) {
         mountRef.current.removeChild(renderer.domElement)
