@@ -212,10 +212,10 @@ export function CheckoutDashboard() {
               ) : null}
 
               <div className={styles.stateActions}>
-                <button type="submit" className={styles.button} disabled={state === 'processing'}>
-                  Confirmer la commande
+                <button type="submit" className={styles.button} disabled={state === 'processing'} aria-busy={state === 'processing'}>
+                  {state === 'processing' ? 'Traitement...' : 'Confirmer la commande'}
                 </button>
-                <button type="button" className={styles.ghostButton} onClick={reset}>
+                <button type="button" className={styles.ghostButton} onClick={reset} disabled={state === 'processing'}>
                   Reinitialiser
                 </button>
               </div>
