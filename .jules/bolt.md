@@ -1,0 +1,3 @@
+## 2024-04-13 - Pausing Three.js render loops gracefully
+**Learning:** In Three.js, calling `clock.stop()` and subsequently `clock.start()` to pause an animation loop (e.g., when a component goes off-screen via IntersectionObserver) causes a visual regression for shader materials. `clock.start()` forcibly resets the `elapsedTime` to 0, making the animation jarringly snap back to its initial state when it comes back into view.
+**Action:** When using an `IntersectionObserver` to pause off-screen `requestAnimationFrame` loops, only call `cancelAnimationFrame(animationId)` to pause and `render()` to resume. Do not touch the Three.js `Clock` directly; let absolute time continue so the animation resumes seamlessly.
